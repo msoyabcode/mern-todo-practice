@@ -1,11 +1,15 @@
 import React from "react";
 import { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 
 const AddTask = () => {
   const[data, setData] = useState({
     title: "",
     description: ""
   });
+
+  const navigate = useNavigate()
+
 const submitData = async () => {
   console.log(data)
   let result = await fetch("http://localhost:3000/add-data", {
@@ -17,7 +21,9 @@ const submitData = async () => {
   });
 
   result = await result.json();
-  console.log(result);
+  if(result){
+    navigate("/")
+  }
 };
 
 
