@@ -23,7 +23,7 @@ const submitData = async () => {
   result = await result.json();
   if(result){
     navigate("/")
-  }
+  } 
 };
 
 

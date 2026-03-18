@@ -51,5 +51,33 @@ app.delete("/delete/:id", async (req, res)=>{
 })
 
 
+// item edit ke liye
+app.get("/task/:id", async (req, res)=>{
+  const db = await connection ()
+  const id = req.params.id
+  const collection = db.collection(collectionName)
+  let editItem = await collection.findOne({_id: new ObjectId(id)})
+  if(editItem){
+    res.send(editItem)
+  }else{
+    res.send("editItem is not connect")
+  }
+ })
 
-app.listen(3000);
+app.put("/update/:id", async (req, res) => {
+  const db = await connection()
+  const id = req.params.id
+  const collection = db.collection(collectionName)
+
+  const {title, description} = req.body
+
+  let result = await collection.updateOne(
+    {_id: new ObjectId(id)},  //filter
+  {$set: {title,description}}) //updata dena
+
+  if(result){
+    res.send(result)
+  }
+})
+
+app.listen(3000)
